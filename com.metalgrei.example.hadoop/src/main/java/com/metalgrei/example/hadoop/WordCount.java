@@ -12,13 +12,26 @@ import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 
+/**
+ * The Class WordCount.
+ */
 public class WordCount {
 
+	/**
+	 * The Class Map.
+	 */
 	public static class Map extends
 			Mapper<LongWritable, Text, Text, IntWritable> {
+		
+		/** The Constant one. */
 		private final static IntWritable one = new IntWritable(1);
+		
+		/** The word. */
 		private Text word = new Text();
 
+		/* (non-Javadoc)
+		 * @see org.apache.hadoop.mapreduce.Mapper#map(KEYIN, VALUEIN, org.apache.hadoop.mapreduce.Mapper.Context)
+		 */
 		public void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
 			String line = value.toString();
@@ -30,9 +43,15 @@ public class WordCount {
 		}
 	}
 
+	/**
+	 * The Class Reduce.
+	 */
 	public static class Reduce extends
 			Reducer<Text, IntWritable, Text, IntWritable> {
 
+		/* (non-Javadoc)
+		 * @see org.apache.hadoop.mapreduce.Reducer#reduce(KEYIN, java.lang.Iterable, org.apache.hadoop.mapreduce.Reducer.Context)
+		 */
 		public void reduce(Text key, Iterable<IntWritable> values,
 				Context context) throws IOException, InterruptedException {
 			int sum = 0;
@@ -43,6 +62,12 @@ public class WordCount {
 		}
 	}
 
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 * @throws Exception the exception
+	 */
 	public static void main(String[] args) throws Exception {
 		Configuration conf = new Configuration();
 
