@@ -1,0 +1,1 @@
+hadoop jar ./com.metalgrei.example.hadoop-0.0.1-SNAPSHOT.jar com.metalgrei.example.hadoop.WordCount /example/input /example/output/out.txt
