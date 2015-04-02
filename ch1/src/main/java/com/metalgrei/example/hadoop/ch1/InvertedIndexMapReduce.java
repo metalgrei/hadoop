@@ -47,8 +47,8 @@ public final class InvertedIndexMapReduce {
 
     Job job = new Job(conf);
     job.setJarByClass(InvertedIndexMapReduce.class);
-    job.setMapperClass(Map.class);
-    job.setReducerClass(Reduce.class);
+    job.setMapperClass(InvertedIndexMap.class);
+    job.setReducerClass(InvertedIndexReduce.class);
 
     job.setMapOutputKeyClass(Text.class);
     job.setMapOutputValueClass(Text.class);
@@ -66,7 +66,7 @@ public final class InvertedIndexMapReduce {
   /**
    * The Class Map.
    */
-  public static class Map
+  public static class InvertedIndexMap
       extends Mapper<LongWritable, Text, Text, Text> {
 
     /** The document id. */
@@ -101,7 +101,7 @@ public final class InvertedIndexMapReduce {
   /**
    * The Class Reduce.
    */
-  public static class Reduce
+  public static class InvertedIndexReduce
       extends Reducer<Text, Text, Text, Text> {
 
     /** The doc ids. */
