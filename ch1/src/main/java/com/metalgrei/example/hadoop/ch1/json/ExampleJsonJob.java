@@ -20,7 +20,7 @@ import org.apache.hadoop.util.ToolRunner;
 /**
  * The Class ExampleJob.
  */
-public class ExampleJob extends Configured implements Tool {
+public class ExampleJsonJob extends Configured implements Tool {
 
 	/** The Constant JSON. */
 	public static final String JSON = "{\n" + " \"colorsArray\":[{\n"
@@ -43,7 +43,7 @@ public class ExampleJob extends Configured implements Tool {
 	 * @throws Exception the exception
 	 */
 	public static void main(final String[] args) throws Exception {
-		int rest = ToolRunner.run(new Configuration(), new ExampleJob(), args);
+		int rest = ToolRunner.run(new Configuration(), new ExampleJsonJob(), args);
 		System.exit(rest);
 	}
 
@@ -81,7 +81,7 @@ public class ExampleJob extends Configured implements Tool {
 		Configuration conf = super.getConf();
 		writeInput(conf, new Path(input));
 		Job job = new Job(conf);
-		job.setJarByClass(ExampleJob.class);
+		job.setJarByClass(ExampleJsonJob.class);
 		job.setMapperClass(ExampleJobMap.class);
 		job.setNumReduceTasks(0);
 		Path outputPath = new Path(output);
