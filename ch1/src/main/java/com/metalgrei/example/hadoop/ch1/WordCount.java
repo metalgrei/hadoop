@@ -1,12 +1,18 @@
 package com.metalgrei.example.hadoop.ch1;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.StringTokenizer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.conf.*;
-import org.apache.hadoop.io.*;
-import org.apache.hadoop.mapreduce.*;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.Reducer;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
@@ -15,7 +21,10 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 /**
  * The Class WordCount.
  */
-public final class WordCount {
+final class WordCount {
+	
+	private static final Log LOG = LogFactory
+			.getLog(WordCount.class);
 
 	/**
 	 * The Class Map.
@@ -62,13 +71,23 @@ public final class WordCount {
 		}
 	}
 
+	
+	
+	
 	/**
 	 * The main method.
 	 *
 	 * @param args the arguments
 	 * @throws Exception the exception
 	 */
-	public static void main(String[] args) throws Exception {
+	public static void main(String... args) throws Exception {
+		
+		if (args == null || args.length != 2) {
+			String messageError = "WordCount required params: <input file> <output dir>";
+			LOG.error(messageError);
+			throw new IllegalArgumentException(messageError);
+		}
+		
 		Configuration conf = new Configuration();
 
 		Job job = new Job(conf, "wordcount");
