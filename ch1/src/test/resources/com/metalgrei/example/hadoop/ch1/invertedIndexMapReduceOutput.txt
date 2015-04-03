@@ -1,0 +1,5 @@
+Bye	file0
+Goodbye	file1
+Hadoop	file1
+Hello	file1,file0
+World	file0

@@ -19,7 +19,7 @@ import java.util.HashSet;
 /**
  * The Class InvertedIndexMapReduce.
  */
-public final class InvertedIndexMapReduce {
+final class InvertedIndexMapReduce {
   
   /**
    * The main method.
