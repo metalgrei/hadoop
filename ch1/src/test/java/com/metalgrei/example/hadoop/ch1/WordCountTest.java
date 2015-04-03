@@ -1,16 +1,13 @@
 package com.metalgrei.example.hadoop.ch1;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.junit.Test;
 import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
 
 /**
  * The Class WordCountTest.
  */
 public class WordCountTest extends AbstractCh1Test {
-
-	private static final Log LOG = LogFactory.getLog(WordCountTest.class);
 
 	/**
 	 * Main whitout path test.
