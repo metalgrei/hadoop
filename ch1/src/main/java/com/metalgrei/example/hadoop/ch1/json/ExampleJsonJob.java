@@ -1,13 +1,10 @@
 package com.metalgrei.example.hadoop.ch1.json;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
-import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -20,21 +17,7 @@ import org.apache.hadoop.util.ToolRunner;
 /**
  * The Class ExampleJob.
  */
-public class ExampleJsonJob extends Configured implements Tool {
-
-	/** The Constant JSON. */
-	public static final String JSON = "{\n" + " \"colorsArray\":[{\n"
-			+ " \"colorName\":\"red\",\n" + " \"hexValue\":\"#f00\"\n"
-			+ " },\n" + " {\n" + " \"colorName\":\"green\",\n"
-			+ " \"hexValue\":\"#0f0\"\n" + " },\n" + " {\n"
-			+ " \"colorName\":\"blue\",\n" + " \"hexValue\":\"#00f\"\n"
-			+ " },\n" + " {\n" + " \"colorName\":\"cyan\",\n"
-			+ " \"hexValue\":\"#0ff\"\n" + " },\n" + " {\n"
-			+ " \"colorName\":\"magenta\",\n" + " \"hexValue\":\"#f0f\"\n"
-			+ " },\n" + " {\n" + " \"colorName\":\"yellow\",\n"
-			+ " \"hexValue\":\"#ff0\"\n" + " },\n" + " {\n"
-			+ " \"colorName\":\"black\",\n" + " \"hexValue\":\"#000\"\n"
-			+ " }\n" + " ]\n" + "}";
+final class ExampleJsonJob extends Configured implements Tool {
 
 	/**
 	 * The main method.
@@ -47,30 +30,6 @@ public class ExampleJsonJob extends Configured implements Tool {
 		System.exit(rest);
 	}
 
-	/**
-	 * Write input.
-	 *
-	 * @param conf the conf
-	 * @param inputDir the input dir
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 */
-	public static void writeInput(Configuration conf, Path inputDir)
-			throws IOException {
-		FileSystem fs = FileSystem.get(conf);
-
-		if (fs.exists(inputDir)) {
-			throw new IOException(
-					String.format(
-							"Input directory '%s' exists - please remove and rerun this example",
-							inputDir));
-		}
-
-		OutputStreamWriter writer = new OutputStreamWriter(fs.create(new Path(
-				inputDir, "input.txt")));
-		writer.write(JSON);
-		IOUtils.closeStream(writer);
-	}
-
 	/* (non-Javadoc)
 	 * @see org.apache.hadoop.util.Tool#run(java.lang.String[])
 	 */
@@ -79,7 +38,6 @@ public class ExampleJsonJob extends Configured implements Tool {
 		String input = args[0];
 		String output = args[1];
 		Configuration conf = super.getConf();
-		writeInput(conf, new Path(input));
 		Job job = new Job(conf);
 		job.setJarByClass(ExampleJsonJob.class);
 		job.setMapperClass(ExampleJobMap.class);
